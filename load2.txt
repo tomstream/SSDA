@@ -1,0 +1,1 @@
+/home/thomas/Desktop/caffe-master/examples/DA/picture.hd5

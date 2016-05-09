@@ -1,0 +1,50 @@
+name : "DA"
+
+input: "data"
+input_dim: 299
+input_dim: 1
+input_dim: 10
+input_dim: 10
+
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip1"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid1"
+  bottom: "ip1"
+  top: "sigmoid1"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "sigmoid1"
+  top: "ip2"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid2"
+  bottom: "ip2"
+  top: "sigmoid2"
+  type: "Sigmoid"
+}
+
+
+

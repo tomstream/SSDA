@@ -1,0 +1,116 @@
+name : "DA"
+layer {
+  name: "da"
+  type: "HDF5Data"
+  include {
+    phase: TRAIN
+  }
+  top: "data"
+  top: "label"
+  hdf5_data_param {
+    source: "/home/thomas/Desktop/caffe-master/examples/DA/load1.txt"
+    batch_size: 16800
+  }
+}
+
+layer {
+  name: "da"
+  type: "HDF5Data"
+  include {
+    phase: TEST
+  }
+  top: "data"
+  top: "label"
+  hdf5_data_param {
+    source: "/home/thomas/Desktop/caffe-master/examples/DA/load2.txt"
+    batch_size: 25
+  }
+}
+
+layer {
+  name: "flatlabel"
+  type: "Flatten"
+  bottom:"label"
+  top:"flatlabel"
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip1"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid1"
+  bottom: "ip1"
+  top: "sigmoid1"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "sigmoid1"
+  top: "ip2"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid2"
+  bottom: "ip2"
+  top: "sigmoid2"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "loss1"
+  type: "EuclideanLoss"
+  bottom: "sigmoid2"
+  bottom: "flatlabel"
+  top: "loss1"
+  include {
+    phase: TRAIN
+  }
+  loss_weight: 1
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+  type: 'Python'
+  name: 'loss3'
+  top: 'loss3'
+  bottom: 'sigmoid1'
+  bottom: 'flatlabel'
+  python_param {
+    # the module name -- usually the filename -- that needs to be in $PYTHONPATH
+    module: 'kllosslayer'
+    # the layer name -- the class name in the module
+    layer: 'kllosslayer'
+  }
+  # set loss weight so Caffe knows this is a loss layer.
+  # since PythonLayer inherits directly from Layer, this isn't automatically
+  # known to Caffe
+  loss_weight: 0.01
+  include {
+    phase: TRAIN
+  }
+}
+
+

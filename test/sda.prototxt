@@ -1,0 +1,134 @@
+name : "SDA"
+input: "data"
+input_dim:336
+input_dim: 1
+input_dim: 1
+input_dim: 100
+
+
+
+
+# first DA
+layer {
+  name: "ip11"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip11"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid11"
+  bottom: "ip11"
+  top: "sigmoid11"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "ip12"
+  type: "InnerProduct"
+  bottom: "sigmoid11"
+  top: "ip12"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid12"
+  bottom: "ip12"
+  top: "sigmoid12"
+  type: "Sigmoid"
+}
+# 2nd DA
+layer {
+  name: "ip21"
+  type: "InnerProduct"
+  bottom: "sigmoid12"
+  top: "ip21"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid21"
+  bottom: "ip21"
+  top: "sigmoid21"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "ip22"
+  type: "InnerProduct"
+  bottom: "sigmoid21"
+  top: "ip22"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid22"
+  bottom: "ip22"
+  top: "sigmoid22"
+  type: "Sigmoid"
+}
+
+# 3rd DA
+layer {
+  name: "ip31"
+  type: "InnerProduct"
+  bottom: "sigmoid22"
+  top: "ip31"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid31"
+  bottom: "ip31"
+  top: "sigmoid31"
+  type: "Sigmoid"
+}
+
+layer {
+  name: "ip32"
+  type: "InnerProduct"
+  bottom: "sigmoid31"
+  top: "ip32"
+  param{
+    lr_mult:1
+  }
+  inner_product_param{
+    num_output: 100
+  }
+}
+
+layer {
+  name: "sigmoid32"
+  bottom: "ip32"
+  top: "sigmoid32"
+  type: "Sigmoid"
+}
+
+
+
