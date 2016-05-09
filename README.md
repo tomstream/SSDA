@@ -16,8 +16,10 @@ SSDA由两部分网络组成：一个考虑稀疏权重的DA和一个SDA，前�
 ## 训练
 ### 第一个网络
 第一个网络的loss function为：
+
 ![](http://7xljx0.com1.z0.glb.clouddn.com/Screen%20Shot%202016-05-09%20at%204.33.42%20PM.png?imageView/2/w/619/q/90)
 由于caffe中没有KL divergence的loss layer,所以这层是我自己定义的，我参考了caffe样例里的loss.py，照猫画虎做了一个kllosslayer。
+
 ![](http://7xljx0.com1.z0.glb.clouddn.com/Screen%20Shot%202016-05-09%20at%204.38.42%20PM.png?imageView/2/w/619/q/90)
 
 其他的layer由于有现成提供，所以就直接使用。
